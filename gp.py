@@ -41,3 +41,25 @@ def gsa(gpgsa_data):
         else:
             print (f"{keys} : /")
     print("\n")
+
+def rmc(gprmc_data):
+    gprmc_data.pop(0)
+    gprmc_data.append("GNRMC:")
+
+    rmc_data = {
+        "Zeit" : convert.time(gprmc_data[0]) ,
+        "Status" : convert.status(gprmc_data[1]) ,
+        "Breite" : convert.coordinate(gprmc_data[2], gprmc_data[3]) ,
+        "Länge" : convert.coordinate(gprmc_data[4], gprmc_data[5]) ,
+        "Geschwindigkeit" : convert.speed(gprmc_data[6]),
+        "Track angle" : f"{gprmc_data[7]}°", 
+        "Datum" : convert.date(gprmc_data[8]) ,
+        "Magnetische Vari." : f"{gprmc_data[9]}, W"
+    }
+
+    for keys,values in rmc_data.items():
+        if isinstance(values, str):
+            print (f"{keys} : {values}")
+        else:
+            print (f"{keys} : /")
+    print("\n")
