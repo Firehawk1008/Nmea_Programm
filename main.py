@@ -31,6 +31,7 @@ def sort(raw_data):
             print(lines)
 
 i = device()
+print ("test")
 while True:
     sort(i.output_str())
 
