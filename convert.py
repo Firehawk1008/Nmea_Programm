@@ -1,5 +1,4 @@
 
-
 # gets the not seperatet time and converts it to a user friendly time
 # returns readable time as a str
 def time(raw_time):

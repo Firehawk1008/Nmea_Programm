@@ -1,10 +1,11 @@
 import convert
+import printer
 
 # gets the raw gpgga data as an array/list and converts it to an dictonary with readable outputs
-# returns None 
+# returns the dictonary
 def gga(gpgga_data):
     gpgga_data.pop(0)
-
+    
     print("GPGGA:")
     gga_data = {
         "Zeit" : convert.time(gpgga_data[0]) , 
@@ -16,17 +17,12 @@ def gga(gpgga_data):
         "Höhe" : gpgga_data[8] ,
     #    "Höhendifferenz zwischen Ellipsoid und Geoid" : ""
     }
-    for keys,values in gga_data.items():
-        if isinstance(values, str):
-            print (f"{keys} : {values}")
-        else:
-            print (f"{keys} : /")
-    print("\n")
+    printer.dic_print(gga_data)
 
 def gsa(gpgsa_data):
     gpgsa_data.pop(0)
 
-    print("GNGSA:")
+    print("GPGSA:")
     gsa_data = {
         "Selection of 2D or 3D" : gpgsa_data[0],
         "3D fix" : gpgsa_data[1],
@@ -35,17 +31,12 @@ def gsa(gpgsa_data):
         "HDOP" : gpgsa_data[-3],
         "VDOP" : gpgsa_data[-2],
     }
-    for keys,values in gsa_data.items():
-        if isinstance(values, str):
-            print (f"{keys} : {values}")
-        else:
-            print (f"{keys} : /")
-    print("\n")
+    printer.dic_print(gsa_data)
 
 def rmc(gprmc_data):
     gprmc_data.pop(0)
-    gprmc_data.append("GNRMC:")
 
+    print("GPRMC")
     rmc_data = {
         "Zeit" : convert.time(gprmc_data[0]) ,
         "Status" : convert.status(gprmc_data[1]) ,
@@ -57,9 +48,4 @@ def rmc(gprmc_data):
         "Magnetische Vari." : f"{gprmc_data[9]}, W"
     }
 
-    for keys,values in rmc_data.items():
-        if isinstance(values, str):
-            print (f"{keys} : {values}")
-        else:
-            print (f"{keys} : /")
-    print("\n")
+    printer.dic_print(rmc_data)
