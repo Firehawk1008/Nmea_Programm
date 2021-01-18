@@ -21,7 +21,7 @@ def sort(raw_data):
             break
         elif lines[0] == '$GPVTG':
             break
-        elif lines[0] == '$GPGSA':
+        elif lines[0] == '$GNGSA':
             gp.gsa(lines)
         elif lines[0] == '$GPGSV':
             break

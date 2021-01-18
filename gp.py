@@ -26,7 +26,7 @@ def gga(gpgga_data):
 def gsa(gpgsa_data):
     gpgsa_data.pop(0)
 
-    print("GPGSA:")
+    print("GNGSA:")
     gsa_data = {
         "Selection of 2D or 3D" : gpgsa_data[0],
         "3D fix" : gpgsa_data[1],

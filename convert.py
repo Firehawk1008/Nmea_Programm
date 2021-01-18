@@ -45,7 +45,7 @@ def to_str(raw_data):
         return str(raw_data, "utf-8")
 
 def prn(raw_data):
-    prn_data = ""
-    for i in range(len(raw_data) - 6):
-        prn_data = f"{prn_data}, {raw_data[2+i]}"
+    prn_data = f"{raw_data[2]}"
+    for i in range(len(raw_data) - 7):
+        prn_data += f", {raw_data[3+i]}"
     return prn_data
