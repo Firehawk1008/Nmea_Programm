@@ -47,5 +47,5 @@ def to_str(raw_data):
 def prn(raw_data):
     prn_data = ""
     for i in range(len(raw_data) - 6):
-        prn_data += raw_data[2+i]
+        prn_data = f"{prn_data}, {raw_data[2+i]}"
     return prn_data
