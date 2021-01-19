@@ -65,5 +65,6 @@ def speed(raw_data):
     raw_data = float(raw_data)
     return str(round(raw_data * 1.852, 4)) + " km/h"
 
+# returns the date as an readable str
 def date(raw_date):
     return f"{raw_date[:2]}.{raw_date[2:4]}.20{raw_date[4:6]}"    

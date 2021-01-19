@@ -2,7 +2,8 @@ import convert
 import printer
 
 # gets the raw gpgga data as an array/list and converts it to an dictonary with readable outputs
-# returns the dictonary
+# prints the data
+# Frage: Sollte diese fufunktion das Dic zurück geben und sollte die printer Funktion in main.py aufgerufen werden?
 def gga(gpgga_data):
     gpgga_data.pop(0)
     
@@ -19,6 +20,8 @@ def gga(gpgga_data):
     }
     printer.dic_print(gga_data)
 
+# gets the raw gpgsa data as an array/list and converts it to an dictonary with readable outputs
+# prints the data
 def gsa(gpgsa_data):
     gpgsa_data.pop(0)
 
@@ -33,6 +36,8 @@ def gsa(gpgsa_data):
     }
     printer.dic_print(gsa_data)
 
+# gets the raw gprmc data as an array/list and converts it to an dictonary with readable outputs
+# prints the data
 def rmc(gprmc_data):
     gprmc_data.pop(0)
 
