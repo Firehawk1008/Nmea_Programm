@@ -6,4 +6,4 @@ def dic_print(dic):
             print (f"{keys} : {values}")
         else:
             print (f"{keys} : /")
-    print("\n")
+    print("")
