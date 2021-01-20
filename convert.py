@@ -1,4 +1,3 @@
-
 # gets the not seperatet time and converts it to a user friendly time
 # returns readable time as a str
 def time(raw_time):
@@ -68,3 +67,9 @@ def speed(raw_data):
 # returns the date as an readable str
 def date(raw_date):
     return f"{raw_date[:2]}.{raw_date[2:4]}.20{raw_date[4:6]}"    
+
+def selection(raw_selection):
+    if raw_selection == "A":
+        return "Auto"
+    elif raw_selection == "M":
+        return "Manual"
