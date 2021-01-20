@@ -1,5 +1,4 @@
 import convert
-import printer
 
 # gp is filled with the func for getting the gp data and converting them into promptable data
 
