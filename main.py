@@ -13,27 +13,29 @@ def sort(raw_data):
         raw_data = convert.to_a_list(raw_data)
     for lines in raw_data:
         if lines[0] == '$GNRMC' or lines[0] == '$GPRMC':
-            gp.rmc(lines)
+            return dict(gp.rmc(lines))
         elif lines[0] == '$GPZDA':
             break
         elif lines[0] == '$GPGGA':
-            gp.gga(lines)
+            return dict(gp.gga(lines))
         elif lines[0] == '$GPGLL':
             break
         elif lines[0] == '$GPVTG':
             break
         elif lines[0] == '$GNGSA' or lines[0] == '$GPGSA':
-            gp.gsa(lines)
+            return dict(gp.gsa(lines))
         elif lines[0] == '$GPGSV':
             break
         elif lines[0] == '$GLGSV':
             break
         else:
             print(lines)
+    return ""
 
 i = device()
 while True:
-    sort(i.output_str())
+    dic = sort(i.output_str())
+    printer.dic_print(dict(dic))
 
 
 
