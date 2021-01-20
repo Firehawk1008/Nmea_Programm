@@ -1,6 +1,7 @@
 import convert
+import time
 from rich.prompt import Confirm
-import saver1
+import saver
 import printer
 import gp
 import device_output
@@ -16,35 +17,62 @@ def sort(raw_data):
     for lines in raw_data:
         if lines[0] == '$GNRMC' or lines[0] == '$GPRMC':
             return dict(gp.rmc(lines))
-        elif lines[0] == '$GPZDA':
-            break
         elif lines[0] == '$GPGGA':
             return dict(gp.gga(lines))
         elif lines[0] == '$GPGLL':
-            break
-        elif lines[0] == '$GPVTG':
-            break
+            return dict(gp.gll(lines))
         elif lines[0] == '$GNGSA' or lines[0] == '$GPGSA':
             return dict(gp.gsa(lines))
-        elif lines[0] == '$GPGSV':
-            break
-        elif lines[0] == '$GLGSV':
-            break
         else:
-            break
-    return ""
+            return "dont print"
+        break
 
-i = device()
+def summary():
+    final_dic = {
+        "Datum" : "", 
+        "Zeit" : "",
+        "Länge" : "", 
+        "Breite" : "",
+        "Höhe" : "",
+        "Geschwindigkeit" : "",
+        "Track angle" : "",
+        "Status" : "",
+        "GPS-Qualität" : "",
+        "Anzahl Sattelieten" : "", 
+        "PRN" : "",
+        "HDOP" : "",
+        "VDOP" : "",
+        "Selection of 2D or 3D" : "",
+        "3D fix" : "", 
+    }
+    for i in range(12):
+        temp_dic = sort(d.output_str())
+        if temp_dic != "dont print":
+            final_dic = {**final_dic, **temp_dic}
+        else:
+            pass
+    return dict(final_dic)
+
+d = device()
+want_summary = Confirm.ask("Wollen sie die Daten zusammengefasst?")
 want_to_save = Confirm.ask("Wollen sie die Daten abspeichern?")
 while True:
-    raw_protocol= i.output_str()
-    dic = sort(raw_protocol)
-    printer.dic_print(dict(dic))
+    if want_summary == False:
+        raw_protocol= d.output_str()
+        dic = sort(raw_protocol)
+        if dic == "dont print":
+            pass
+        else:
+            printer.dic_print(dict(dic))
+    else: 
+        sum_dic = dict(summary())
+        printer.pretty_dic_print(dict(sum_dic))
 
     # saves the raw device output and the convertet data, if the user confirmed it at the start
-    if want_to_save == True:
-        saver1.save_raw(raw_protocol)
-        saver1.save(dict(dic))
-
+    if want_to_save and not want_summary:
+        saver.save_raw(raw_protocol)
+        saver.save(dict(dic))
+    elif want_to_save and want_summary:
+        saver.save(dict(sum_dic))
 
 
