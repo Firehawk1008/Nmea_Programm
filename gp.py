@@ -1,9 +1,10 @@
 import convert
 import printer
 
+# gp is filled with the func for getting the gp data and converting them into promptable data
+
 # gets the raw gpgga data as an array/list and converts it to an dictonary with readable outputs
-# prints the data
-# Frage: Sollte diese fufunktion das Dic zurück geben und sollte die printer Funktion in main.py aufgerufen werden?
+# returns a dict
 def gga(gpgga_data):
     gpgga_data.pop(0)
     
@@ -18,10 +19,10 @@ def gga(gpgga_data):
         "Höhe" : gpgga_data[8] ,
     #    "Höhendifferenz zwischen Ellipsoid und Geoid" : ""
     }
-    printer.dic_print(gga_data)
+    return dict(gga_data)
 
 # gets the raw gpgsa data as an array/list and converts it to an dictonary with readable outputs
-# prints the data
+# returns a dict
 def gsa(gpgsa_data):
     gpgsa_data.pop(0)
 
@@ -34,14 +35,14 @@ def gsa(gpgsa_data):
         "HDOP" : gpgsa_data[-3],
         "VDOP" : gpgsa_data[-2],
     }
-    printer.dic_print(gsa_data)
+    return dict(gsa_data)
 
 # gets the raw gprmc data as an array/list and converts it to an dictonary with readable outputs
-# prints the data
+# returns a dict
 def rmc(gprmc_data):
     gprmc_data.pop(0)
 
-    print("GPRMC")
+    print("GPRMC:")
     rmc_data = {
         "Zeit" : convert.time(gprmc_data[0]) ,
         "Status" : convert.status(gprmc_data[1]) ,
@@ -53,4 +54,4 @@ def rmc(gprmc_data):
         "Magnetische Vari." : f"{gprmc_data[9]}, W"
     }
 
-    printer.dic_print(rmc_data)
+    return dict(rmc_data)
