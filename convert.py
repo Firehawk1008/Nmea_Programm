@@ -68,6 +68,7 @@ def speed(raw_data):
 def date(raw_date):
     return f"{raw_date[:2]}.{raw_date[2:4]}.20{raw_date[4:6]}"    
 
+# returns the whole word for the selection for satelites
 def selection(raw_selection):
     if raw_selection == "A":
         return "Auto"

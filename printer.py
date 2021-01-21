@@ -1,7 +1,7 @@
 from rich.console import Console
 from rich.table import Table
 
-def dic_print(dic):
+def dict_print(dic):
     for keys,values in dic.items():
         if isinstance(values, str):
             print (f"{keys} : {values}")
@@ -9,7 +9,7 @@ def dic_print(dic):
             print (f"{keys} : /")
     print("")
 
-def pretty_dic_print(dic):
+def pretty_dict_print(dic):
     table = Table(title="NMEA-Daten")
     table.add_column("Name", style="cyan", no_wrap=True)
     table.add_column("Value", style="green")
