@@ -8,7 +8,6 @@ import device_output
 from device_output import device
 # Program disclaimer: Getting nmea protocol data, directly from the device and converts it to readable outputs
 
-
 # sorts the data by the protocol type and converts it to a list, if it isn't already, 
 #return "dont print" stands for all the protocols that are not needed
 # returns a dict rdy to print
@@ -83,5 +82,3 @@ while True:
         saver.save(dict(sum_dict))
     else:
         pass
-
-
