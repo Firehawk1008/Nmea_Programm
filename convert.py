@@ -7,9 +7,9 @@ def time(raw_time):
 # returns readable coordiantes as a str
 def coordinate(raw_coordinate, direction):
     if direction == 'W' or direction == 'E':
-        return raw_coordinate[1:3] + "d " + raw_coordinate[3:10] + "' " + direction
+        return f"{raw_coordinate[1:3]}d {raw_coordinate[3:10]}' direction"
     elif direction == 'N' or direction == 'S':
-        return raw_coordinate[0:2] + "d " + raw_coordinate[2:9] + "' " + direction
+        return f"{raw_coordinate[0:2]}d {raw_coordinate[2:9]}' direction"
 
 # gets the gps data
 # returns a proper message for it, so the user can understand it better
