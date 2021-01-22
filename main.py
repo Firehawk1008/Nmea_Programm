@@ -58,27 +58,53 @@ def summary():
             pass
     return dict(final_dict)
 
-dev = device()
-has_rich = Confirm.ask("Ist auf ihrem Gerät \"rich\" installiert?")
-want_to_save = Confirm.ask("Wollen sie die Daten abspeichern?")
-if want_to_save:
-    want_to_save_raw = Confirm.ask("Auch die roh Daten?")
-elif not want_to_save:
-    want_to_save_raw = False
-# the processing loop 
-while True:
-    sum_dict = dict(summary())
-    if has_rich:
-        printer.pretty_dict_print(dict(sum_dict))
-    elif not has_rich:
-        printer.dict_print(dict(sum_dict))
+# asks the user for a simple y or n input to awnser {question}
+# returns boolean : True for y and False for n
+def yes_or_no(question):
+    check = str(input(f"{question} (y/n)")).lower().strip()
+    try:
+        if check[:1] == 'y':
+            return True
+        elif check[:1] == 'n':
+            return False
+        else:
+            print('Invalid Input')
+            return yes_or_no(question)
+    except Exception as error:
+        print("Bitte geben sie y oder n ein")
+        print(error)
+        return yes_or_no(question)
 
-    # saves the raw device output and the convertet data, if the user confirmed it at the start
-    if want_to_save_raw and want_to_save:
-        raw_protocol = dev.output_str()
-        saver.save_raw(raw_protocol)
-        saver.save_summary(dict(sum_dict))
-    elif want_to_save:
-        saver.save(dict(sum_dict))
-    else:
-        pass
+try:
+    dev = device()
+    has_rich = yes_or_no("Ist auf ihrem Gerät \"rich\" installiert?")
+    want_to_save = yes_or_no("Wollen sie die Daten abspeichern?")
+    if want_to_save:
+        want_to_save_raw = yes_or_no("Auch die roh Daten?")
+        saver.time_stamp()
+        if want_to_save_raw:
+            saver.time_stamp_raw()
+    elif not want_to_save:
+        want_to_save_raw = False
+    # the processing loop 
+    while True:
+        sum_dict = dict(summary())
+        if has_rich:
+            printer.pretty_dict_print(dict(sum_dict))
+        elif not has_rich:
+            printer.dict_print(dict(sum_dict))
+
+        # saves the raw device output and the convertet data, if the user confirmed it at the start
+        if want_to_save_raw and want_to_save:
+            raw_protocol = dev.output_str()
+            saver.save_raw(raw_protocol)
+            saver.save_summary(dict(sum_dict))
+        elif want_to_save:
+            saver.save_summary(dict(sum_dict))
+        else:
+            pass
+except KeyboardInterrupt:
+    quit()
+except Exception as err:
+    print (err)
+    quit()
