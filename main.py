@@ -6,7 +6,9 @@ import printer
 import gp
 import device_output
 from device_output import device
-# Program disclaimer: Getting nmea protocol data, directly from the device and converts it to readable outputs
+# Program disclaimer: Getting nmea protocol data from the GNS 1301 and converts it into readable outputs
+''' Known Problems: PRN splits the data in half and sends it over 2 cycels, wich leads to the problem, that only one is saved/printet
+'''
 
 # sorts the data by the protocol type and converts it to a list, if it isn't already, 
 #return "dont print" stands for all the protocols that are not needed
@@ -50,7 +52,10 @@ def summary():
     # the loop is giving the device output as a str into the sort func and then saves it into a dict
     # the protocol has 6 lines, so in range(12) makes sure that it gets at least one line for the dict 
     for i in range(12):
-        temp_dict = sort(dev.output_str())
+        input = dev.output_str()
+        if want_to_save_raw:
+                saver.save_raw(input)
+        temp_dict = sort(input)
         # merges the dicts if they are relevent !the last input into the dict overrides the previous data!
         if temp_dict != "dont print":
             final_dict = {**final_dict, **temp_dict}
@@ -95,11 +100,7 @@ try:
             printer.dict_print(dict(sum_dict))
 
         # saves the raw device output and the convertet data, if the user confirmed it at the start
-        if want_to_save_raw and want_to_save:
-            raw_protocol = dev.output_str()
-            saver.save_raw(raw_protocol)
-            saver.save_summary(dict(sum_dict))
-        elif want_to_save:
+        if want_to_save:
             saver.save_summary(dict(sum_dict))
         else:
             pass
